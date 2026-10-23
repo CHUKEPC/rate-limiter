@@ -123,15 +123,19 @@ class RateLimitMiddleware:
             for name, value in headers.items()
         ]
 
-        await send({
-            "type": "http.response.start",
-            "status": status_code,
-            "headers": raw_headers,
-        })
-        await send({
-            "type": "http.response.body",
-            "body": body_bytes,
-        })
+        await send(
+            {
+                "type": "http.response.start",
+                "status": status_code,
+                "headers": raw_headers,
+            }
+        )
+        await send(
+            {
+                "type": "http.response.body",
+                "body": body_bytes,
+            }
+        )
 
     async def _send_forbidden(self, send: Send, exc: BlacklistedError) -> None:
         """Send HTTP 403 Forbidden for blacklisted identifiers."""
@@ -145,12 +149,16 @@ class RateLimitMiddleware:
             (b"content-type", b"application/json"),
             (b"content-length", str(len(body_bytes)).encode("latin-1")),
         ]
-        await send({
-            "type": "http.response.start",
-            "status": 403,
-            "headers": raw_headers,
-        })
-        await send({
-            "type": "http.response.body",
-            "body": body_bytes,
-        })
+        await send(
+            {
+                "type": "http.response.start",
+                "status": 403,
+                "headers": raw_headers,
+            }
+        )
+        await send(
+            {
+                "type": "http.response.body",
+                "body": body_bytes,
+            }
+        )

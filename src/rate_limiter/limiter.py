@@ -48,7 +48,9 @@ class RateLimiter:
         self.tier_resolver = tier_resolver
         self.raise_on_exceeded = raise_on_exceeded
 
-    async def _resolve_rule(self, request: Any, explicit_rule: RateLimitRule | None) -> RateLimitRule:
+    async def _resolve_rule(
+        self, request: Any, explicit_rule: RateLimitRule | None
+    ) -> RateLimitRule:
         """Determine applicable rule considering explicit rule and dynamic tiers."""
         if explicit_rule is not None:
             return explicit_rule

@@ -61,11 +61,7 @@ def rate_limit(
     if rule is not None:
         effective_rule = rule
     elif limit is not None and period is not None:
-        algo_enum = (
-            AlgorithmType(algorithm)
-            if algorithm
-            else AlgorithmType.SLIDING_WINDOW_COUNTER
-        )
+        algo_enum = AlgorithmType(algorithm) if algorithm else AlgorithmType.SLIDING_WINDOW_COUNTER
         effective_rule = RateLimitRule(
             limit=limit,
             period=period,

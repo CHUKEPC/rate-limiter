@@ -83,4 +83,3 @@ class BlacklistedError(RateLimiterError):
 
 # Suffix-compliant alias
 RateLimitExceededError = RateLimitExceeded
-
