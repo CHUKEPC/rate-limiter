@@ -39,9 +39,14 @@ class UserKeyStrategy(BaseKeyStrategy):
         if state is not None and hasattr(state, "user"):
             user_obj = state.user
 
-        # Check request.user (Starlette / Django)
-        if user_obj is None and hasattr(request, "user"):
-            user_obj = request.user
+        # Safely check request.user (handling Starlette scope assertion and Django)
+        if user_obj is None and hasattr(request, "scope") and isinstance(request.scope, dict):
+            user_obj = request.scope.get("user")
+        elif user_obj is None and hasattr(request, "user"):
+            try:
+                user_obj = request.user
+            except AssertionError:
+                user_obj = None
 
         uid: str | None = None
         if user_obj is not None:
